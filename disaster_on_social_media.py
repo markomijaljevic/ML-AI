@@ -17,14 +17,26 @@ def standardize_text(text_values):
 
     return text_values
 
+def regex_tokenizer(text_series, regex):
+    '''
+    A function that returns a new Pandas Series based on RegexpTokenizer transformation from NLTK library.
+    Input: regex_tokenizer("Pandas Series","Regular Expression")
+    '''
+
+    tokenizer = RegexpTokenizer(regex)
+    return text_series.apply(tokenizer.tokenize)
+
 def main():
 
-    source_path = 'input_data\\socialmedia-disaster-tweets-DFE.csv'
+    source_path = '..\\input_data\\socialmedia-disaster-tweets-DFE.csv'
     
     data = pd.read_csv(source_path, encoding='latin')
     working_data = data[['text', 'choose_one']]
-    working_data['text'] = standardize_text(working_data['text'].values)
 
+    # Future note: remove SettingWithCopyWarning that these two lines generate
+    working_data['text'] = standardize_text(working_data['text'].values)
+    working_data['clean_text_tokens'] = regex_tokenizer(working_data['text'], r'\w+')
+    
     print(working_data.head())
 
 if __name__ == "__main__":
