@@ -1,7 +1,5 @@
 from nltk.tokenize import RegexpTokenizer
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
+import matplotlib.pyplot as plt
 import pandas as pd
 import re
 
@@ -30,6 +28,28 @@ def regex_tokenizer(text_values, regex):
     tokenizer = RegexpTokenizer(regex)
     return list(map(tokenizer.tokenize, text_values))
 
+def inspect_text_data(text_values, graph_flag = False):
+    '''
+    The function inspects textual data. Gives information about a number of words, number of unique words and sentence length (max length).
+    Input: inspect_text_data("list of string tokens", "graph_flag") -> graph_flag default state is False, if True, Histogram is displayed showing sentence length information.
+    '''
+
+    all_words = [ word for token in text_values for word in token]
+    sentence_length = [len(token) for token in text_values]
+    vocabulary = list(set(all_words))
+
+    print("%s words in total, with a vocabulary size of %s" % (len(all_words), len(vocabulary)))
+    print("Max sentence length is %s" % max(sentence_length))
+
+    if graph_flag:
+        fig = plt.figure(figsize=(5, 5)) 
+        plt.xlabel('Sentence length')
+        plt.ylabel('Number of sentences')
+        plt.hist(sentence_length)
+        plt.show()
+
+
+
 def main():
 
     source_path = '..\\input_data\\socialmedia-disaster-tweets-DFE.csv' # https://www.kaggle.com/jannesklaas/disasters-on-social-media
@@ -40,7 +60,7 @@ def main():
     working_data['text'] = standardize_text(working_data['text'].values)
     working_data['clean_text_tokens'] = regex_tokenizer(working_data['text'].values, r'\w+')
 
-    print(working_data.tail())
+    inspect_text_data(working_data['clean_text_tokens'].values, True)
 
 if __name__ == "__main__":
     main()
