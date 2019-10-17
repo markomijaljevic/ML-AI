@@ -1,6 +1,10 @@
+from nltk.tokenize import RegexpTokenizer
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from keras.utils import to_categorical
 import pandas as pd
 import re
-from nltk.tokenize import RegexpTokenizer
+
 
 def standardize_text(text_values):
     '''
@@ -17,27 +21,26 @@ def standardize_text(text_values):
 
     return text_values
 
-def regex_tokenizer(text_series, regex):
+def regex_tokenizer(text_values, regex):
     '''
-    A function that returns a new Pandas Series based on RegexpTokenizer transformation from NLTK library.
-    Input: regex_tokenizer("Pandas Series","Regular Expression")
+    A function that returns a new list of strings based on RegexpTokenizer transformation from NLTK library.
+    Input: regex_tokenizer("list of strings","regular expression")
     '''
 
     tokenizer = RegexpTokenizer(regex)
-    return text_series.apply(tokenizer.tokenize)
+    return list(map(tokenizer.tokenize, text_values))
 
 def main():
 
-    source_path = '..\\input_data\\socialmedia-disaster-tweets-DFE.csv'
+    source_path = '..\\input_data\\socialmedia-disaster-tweets-DFE.csv' # https://www.kaggle.com/jannesklaas/disasters-on-social-media
     
     data = pd.read_csv(source_path, encoding='latin')
-    working_data = data[['text', 'choose_one']]
+    working_data = data.loc[:,['text', 'choose_one']]
 
-    # Future note: remove SettingWithCopyWarning that these two lines generate
     working_data['text'] = standardize_text(working_data['text'].values)
-    working_data['clean_text_tokens'] = regex_tokenizer(working_data['text'], r'\w+')
-    
-    print(working_data.head())
+    working_data['clean_text_tokens'] = regex_tokenizer(working_data['text'].values, r'\w+')
+
+    print(working_data.tail())
 
 if __name__ == "__main__":
     main()
