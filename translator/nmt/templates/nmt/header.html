@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Translator</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'nmt/styles/style.css' %}"/>
+
+    </head>
+    <body>
+
+    <div id="loader" class="cover-block-screen">
+        <div class="loader"></div>
+    </div>
+
+    {% block main_content%}
+        <div>Insert Content</div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'nmt/footer.html' %}
+    {% endblock%}
+

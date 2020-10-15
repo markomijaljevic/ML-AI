@@ -1,0 +1,47 @@
+{% extends 'nmt/header.html' %}
+
+{% block main_content %}
+<div class="main-wrapper">
+
+    <div class="input-output-wrapper">
+        <div class="input-output">
+            <textarea id="input" class="lang-text-area"></textarea>
+        </div>
+        <div class="separator">
+
+            <span>&larr;</span>
+            <span>&rarr;</span>
+
+        </div>
+        <div class="input-output">
+            <textarea id="output" class="lang-text-area" disabled></textarea>
+        </div>
+    </div>
+
+    <div class="commands-wrapper">
+        <div class="flex">
+            <div id="input-lang" class="langs-wrapper">
+                <div title="auto" class="btn lang-btn active" onclick="activateBtn(event);">Auto</div>
+                <div title="HR" class="btn lang-btn" onclick="activateBtn(event);">HR</div>
+                <div title="EN" class="btn lang-btn" onclick="activateBtn(event);">EN</div>
+                <div title="IT" class="btn lang-btn" onclick="activateBtn(event);">IT</div>
+                <div title="DE" class="btn lang-btn" onclick="activateBtn(event);">DE</div>
+                <div title="ES" class="btn lang-btn" onclick="activateBtn(event);">ES</div>
+                <div title="FR" class="btn lang-btn" onclick="activateBtn(event);">FR</div>
+            </div>
+            <div class="separator reset-padding"></div>
+            <div id="output-lang" class="langs-wrapper">
+                <div title="HR" class="btn lang-btn" onclick="activateBtn(event);">HR</div>
+                <div title="EN" class="btn lang-btn active" onclick="activateBtn(event);">EN</div>
+                <div title="IT" class="btn lang-btn" onclick="activateBtn(event);">IT</div>
+                <div title="DE" class="btn lang-btn" onclick="activateBtn(event);">DE</div>
+                <div title="ES" class="btn lang-btn" onclick="activateBtn(event);">ES</div>
+                <div title="FR" class="btn lang-btn" onclick="activateBtn(event);">FR</div>
+            </div>
+        </div>
+        <div class="btn translate-btn" onclick="translate_text();">Translate</div>
+        <div id="bleu" class="btn bleu-btn">BLEU SCORE</div>
+    </div>
+</div>
+{% endblock %}
+
